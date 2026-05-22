@@ -1,164 +1,144 @@
-# 🛒 Carrito de Compras - Proyecto Final
+# 🛒 Carrito de Compras - Ejercicio 2 (Pruebas de Software)
 
-Este proyecto consiste en una aplicación de escritorio desarrollada en **Java Swing** que simula el funcionamiento básico de un sistema de carrito de compras.
+Este repositorio contiene la solución del **Ejercicio Propuesto 2: Carrito de Compras**, desarrollada en Java y enfocada en la validación del comportamiento del negocio mediante **pruebas unitarias**.
 
-El sistema permite gestionar productos dentro del carrito, realizar operaciones de compra y validar el correcto funcionamiento mediante pruebas automatizadas utilizando **JUnit 5**, **Mockito** y análisis de cobertura con **JaCoCo**.
-
----
-
-## 📌 Características Principales
-
-- Interfaz gráfica desarrollada con **Java Swing**.
-- Gestión de productos dentro del carrito de compras.
-- Arquitectura basada en Maven.
-- Ejecución de pruebas unitarias automatizadas.
-- Uso de mocks para simulación de comportamientos con Mockito.
-- Generación de reportes de cobertura de código con JaCoCo.
-- Compatible con Java 17.
+El proyecto modela un carrito de compras capaz de **agregar productos, actualizar cantidades, remover ítems, vaciar el carrito y calcular subtotales, descuentos e impuestos**. Además, registra un historial de operaciones para dejar trazabilidad de cada acción ejecutada.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Tecnologías y Herramientas
 
-| Tecnología | Descripción |
-|---|---|
-| Java 17 | Lenguaje principal del proyecto |
-| Java Swing | Interfaz gráfica de usuario |
-| Apache Maven | Gestión de dependencias y compilación |
-| JUnit 5 | Framework de pruebas unitarias |
-| Mockito | Simulación y pruebas de comportamiento |
-| JaCoCo | Cobertura de pruebas |
+- **Lenguaje:** Java 17
+- **Gestor de dependencias:** Apache Maven
+- **Framework de pruebas:** JUnit 5
+- **Mocking:** Mockito
+- **Cobertura:** JaCoCo
+- **Interfaz gráfica:** Java Swing
 
 ---
 
-## 📂 Estructura del Proyecto
+## 🧱 Estructura del Proyecto
+
+La solución sigue la estructura estándar de Maven:
 
 ```text
 carrito-compras/
 ├── src/
 │   ├── main/java/com/tienda/
-│   │   └── Main.java
-│   │
+│   │   ├── Main.java
+│   │   ├── modelo/
+│   │   │   ├── Producto.java
+│   │   │   ├── ItemCarrito.java
+│   │   │   ├── CarritoCompra.java
+│   │   │   └── HistorialOperacion.java
+│   │   ├── servicio/
+│   │   │   ├── ServicioPrecio.java
+│   │   │   └── ServicioPrecioImpl.java
+│   │   └── ui/
+│   │       └── CarritoUI.java
 │   └── test/java/com/tienda/
-│
-├── target/
-│   ├── carrito-compras-1.0-SNAPSHOT.jar
-│   └── jacoco.exec
-│
-├── pom.xml
-└── README.md
+│       ├── modelo/
+│       │   ├── ProductoTest.java
+│       │   ├── ItemCarritoTest.java
+│       │   └── CarritoCompraTest.java
+│       └── servicio/
+│           └── ServicioPrecioImplTest.java
+└── pom.xml
 ```
 
 ---
 
-## ▶️ Ejecución del Proyecto
+## 🧪 Enfoque de Pruebas
 
-### 1. Clonar el repositorio
+La parte más importante del proyecto es la validación del núcleo de negocio. Para ello se implementó una suite de **52 pruebas unitarias** que cubre constructor, validaciones, cálculos, comportamiento de colecciones y formato de salida.
 
-```bash
-git clone <URL_DEL_REPOSITORIO>
-cd carrito-compras
-```
+### Lo que se valida
+- creación de productos e ítems del carrito,
+- manejo de cantidades inválidas,
+- agregado de productos nuevos y duplicados,
+- eliminación y actualización de productos,
+- cálculo de subtotal y total,
+- aplicación de descuento e impuesto,
+- historial de operaciones,
+- métodos `equals`, `hashCode` y `toString`.
 
----
-
-### 2. Compilar el proyecto
-
-```bash
-mvn clean compile
-```
-
----
-
-### 3. Ejecutar la aplicación
-
-```bash
-mvn exec:java
-```
-
-También puede ejecutarse directamente desde el IDE ejecutando la clase:
-
-```text
-com.tienda.Main
-```
+### Recursos usados en las pruebas
+- `@BeforeEach` para aislar cada caso,
+- `@Nested` para organizar escenarios,
+- `@ParameterizedTest` donde ayuda a simplificar validaciones,
+- Mockito para simular el servicio de precios.
 
 ---
 
-## 🧪 Ejecución de Pruebas
+## ✅ Funcionalidades Principales
 
-Para ejecutar todas las pruebas unitarias:
+### Producto
+Representa un artículo disponible para compra, con:
+- identificador,
+- nombre,
+- precio,
+- estado de disponibilidad.
 
-```bash
-mvn test
-```
+### ItemCarrito
+Modela un producto dentro del carrito junto con su cantidad. Permite:
+- obtener subtotal,
+- cambiar cantidad,
+- incrementar unidades.
+
+### CarritoCompra
+Es la clase central del sistema. Permite:
+- agregar productos,
+- evitar duplicados sumando cantidades,
+- remover productos por ID,
+- actualizar cantidades,
+- vaciar el carrito,
+- calcular subtotal y total,
+- consultar historial,
+- obtener el item con mayor subtotal.
+
+### ServicioPrecio
+Encapsula la lógica de cálculo de:
+- descuento,
+- impuesto.
+
+### HistorialOperacion
+Registra cada movimiento importante del carrito con fecha, tipo y detalle.
 
 ---
 
-## 📊 Cobertura de Código con JaCoCo
+## 🚀 Cómo Ejecutar el Proyecto
 
-El proyecto incluye integración con JaCoCo para generar reportes de cobertura.
-
-Para generar el reporte:
+### Ejecutar las pruebas
+Desde consola:
 
 ```bash
 mvn clean test
 ```
 
-El reporte HTML se encontrará en:
+### Ejecutar la aplicación
+Compilar y ejecutar la interfaz:
 
-```text
-target/site/jacoco/index.html
+```bash
+mvn clean compile
+mvn exec:java
 ```
 
----
-
-## ⚙️ Dependencias Principales
-
-El proyecto utiliza las siguientes dependencias principales:
-
-```xml
-<dependency>
-    <groupId>org.junit.jupiter</groupId>
-    <artifactId>junit-jupiter-engine</artifactId>
-    <version>5.10.0</version>
-    <scope>test</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-core</artifactId>
-    <version>5.5.0</version>
-    <scope>test</scope>
-</dependency>
-```
+Si tu IDE lo permite, también puedes ejecutar directamente la clase `com.tienda.Main`.
 
 ---
 
-## 🖥️ Arquitectura General
+## 📋 Reglas de Negocio Implementadas
 
-El flujo principal de la aplicación inicia desde la clase `Main.java`, donde se crea la interfaz gráfica utilizando `SwingUtilities.invokeLater()` para garantizar una ejecución segura en el hilo de eventos de Swing.
-
-```java
-SwingUtilities.invokeLater(() -> {
-    CarritoUI frame = new CarritoUI();
-    frame.setVisible(true);
-});
-```
-
----
-
-## 📖 Objetivo del Proyecto
-
-El propósito principal de este proyecto es aplicar conceptos de:
-
-- Desarrollo de interfaces gráficas.
-- Programación orientada a objetos.
-- Gestión de dependencias con Maven.
-- Automatización de pruebas.
-- Cobertura y calidad de software.
+- El carrito no acepta un servicio de precios nulo.
+- No se pueden agregar productos nulos.
+- La cantidad debe ser mayor que cero.
+- No se permite agregar productos no disponibles.
+- Si un producto ya existe en el carrito, se incrementa su cantidad en lugar de crear otro ítem.
+- No se permiten montos negativos para descuento o impuesto.
+- El historial guarda cada operación realizada.
 
 ---
 
-## 👨‍💻 Autor
+## 📌 Resultado del Ejercicio
 
-Proyecto académico desarrollado para prácticas y evaluación de pruebas de software y desarrollo Java.
+Este ejercicio está orientado a demostrar una implementación clara de lógica de negocio junto con una estrategia de pruebas sólida. La prioridad está en la **correctitud, mantenibilidad y verificabilidad** del carrito de compras.
